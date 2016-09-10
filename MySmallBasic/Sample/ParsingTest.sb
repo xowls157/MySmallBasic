@@ -1,3 +1,15 @@
-For i = 10 To 1 Step -1   
-	TextWindow.WriteLine(i) 
-EndFor  
+var = 0
+While var < 5
+  TextWindow.WriteLine("code1")
+  While var < 2
+    START :
+    TextWindow.WriteLine("code2")
+    var = var +1
+  EndWhile
+  TextWindow.WriteLine("code3")
+  var = var + 1
+EndWhile
+TextWindow.WriteLine("code1")
+
+var =0
+Goto START

@@ -31,7 +31,7 @@ public class ArithExpr extends Expr
 	}
 	
 	public Result evalExpr(Env env){
-		Result res;
+		Result res = null;
 		Expr[] temp_ex = this.GetOperand();
 		StrV sv1, sv2;
 
@@ -41,9 +41,7 @@ public class ArithExpr extends Expr
 		parsed_float1 = parsed_float2 = 0;
 		oprnd1_str = oprnd2_str = null;
 
-		
-		
-		
+
 		Result oprnd1 = temp_ex[0].evalExpr(env);
 		
 		if(oprnd1.getValue() instanceof StrV){
@@ -69,7 +67,7 @@ public class ArithExpr extends Expr
 		}
 		
 
-		try{
+		/*try{
 			parsed_float1 = Float.parseFloat(oprnd1_str);
 		}
 		catch(Exception e){
@@ -80,9 +78,10 @@ public class ArithExpr extends Expr
 		}
 		catch(Exception e){
 			parsed_float2 =0;
-		}
+		}*/
 		
-		
+		parsed_float1 = Interpreter.isNum(oprnd1_str)? Float.parseFloat(oprnd1_str):0;
+		parsed_float2 = Interpreter.isNum(oprnd2_str)? Float.parseFloat(oprnd2_str):0;
 		
 		if( this.GetOp() ==ArithExpr.PLUS ){
 			//numeric case :
@@ -93,26 +92,17 @@ public class ArithExpr extends Expr
 				res = new Result(env, new StrV(oprnd1_str + oprnd2_str));
 		}
 		else if (this.GetOp() ==ArithExpr.MINUS){
-			if(Interpreter.isNum(oprnd1_str) && Interpreter.isNum(oprnd2_str))
 				res = new Result(env, new StrV(Float.toString(parsed_float1 - parsed_float2)) );
-			else
-				res = new Result(env, new StrV("0"));
 		}
 		else if (this.GetOp() ==ArithExpr.MULTIFLY){
-			if(Interpreter.isNum(oprnd1_str) && Interpreter.isNum(oprnd2_str))
 				res = new Result(env, new StrV(Float.toString(parsed_float1 * parsed_float2)) );
-			else
-				res = new Result(env, new StrV("0"));
 		}
 		else if (this.GetOp() ==ArithExpr.DIVIDE){
-			if(parsed_float2 == 0 || oprnd2_str == null){
+			if(parsed_float2 == 0){
 				System.err.println("Divide : err");
 				return null;
 			}
-			if(Interpreter.isNum(oprnd1_str) && Interpreter.isNum(oprnd2_str))
-				res = new Result(env, new StrV(Float.toString(parsed_float1 / parsed_float2)) );
-			else
-				res = new Result(env, new StrV("0"));
+			res = new Result(env, new StrV(Float.toString(parsed_float1 / parsed_float2)) );
 		}
 		else if (this.GetOp() == ArithExpr.UNARY_MINUS){
 			res = new Result(env, new StrV(Float.toString(-parsed_float1)) );
@@ -123,19 +113,13 @@ public class ArithExpr extends Expr
 		}
 		
 		//Check .0 
-		try{
-			String str = ((StrV)(res.getValue())).getValue();	//res->String value.
-			
-			float temp_float =Float.parseFloat(str);
-			int temp_int = (int)temp_float;
-			
-			if( temp_float - temp_int == 0 ){
-				res = new Result(env, new StrV(Integer.toString(temp_int)));
-			}
-		}
-		catch(Exception e){
-			//Alphabetic value case : pass
-			;
+		String str = ((StrV)(res.getValue())).getValue();	//res->String value.
+		
+		float temp_float =Float.parseFloat(str);
+		int temp_int = (int)temp_float;
+		
+		if( temp_float - temp_int == 0 ){
+			res = new Result(env, new StrV(Integer.toString(temp_int)));
 		}
 		
 		return res;

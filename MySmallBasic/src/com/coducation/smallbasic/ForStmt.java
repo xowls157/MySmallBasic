@@ -12,7 +12,7 @@ public class ForStmt extends Stmt
 			this.block = block;
 		} // Builder
 		
-		public Result evalStmt(Env env) throws Exception{
+		public Result evalStmt(Env env){
 			Result res;
 			
 			Assign asn = new Assign(var, init);	//initialization.
@@ -39,6 +39,10 @@ public class ForStmt extends Stmt
 			}
 			
 			return new Result(env);
+		}
+		
+		public Stmt getStmt(){
+			return block;
 		}
 		
 		private Var var;

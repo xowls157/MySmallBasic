@@ -49,7 +49,7 @@ public class CompExpr extends CondExpr
 		else {
 			System.err.println("ComphExpr : err");
 		}
-		
+		/*
 		try {
 			parsed_float1 = Float.parseFloat(oprnd1_str);	
 		}
@@ -62,6 +62,10 @@ public class CompExpr extends CondExpr
 		catch(NumberFormatException n) {
 			parsed_float2 = 0;
 		}
+		*/
+		
+		parsed_float1 = Interpreter.isNum(oprnd1_str)? Float.parseFloat(oprnd1_str):0;
+		parsed_float2 = Interpreter.isNum(oprnd2_str)? Float.parseFloat(oprnd2_str):0;
 		
 		if( this.GetOp() == CompExpr.EQUAL ){			
 			if( oprnd1_str.equals(oprnd2_str))

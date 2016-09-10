@@ -6,8 +6,12 @@ class Stmt
 	{
 	} // Builder
 	
-	public Result evalStmt(Env env) throws Exception{
+	public Result evalStmt(Env env) {
 		return new Result(env , null);
+	}
+	
+	public Stmt getStmt(){
+		return null;
 	}
 	
     public void prettyprint()

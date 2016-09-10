@@ -10,7 +10,7 @@ public class BlockStmt extends Stmt
 			this.stmts = stmts;
 		} // Builder
 		
-		public Result evalStmt(Env env) throws Exception {
+		public Result evalStmt(Env env){
 			Result res = null;
 			
 			for(int size = 0; size < stmts.size(); size++){

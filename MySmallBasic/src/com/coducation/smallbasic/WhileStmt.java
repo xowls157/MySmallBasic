@@ -9,11 +9,11 @@ public class WhileStmt extends Stmt
 			this.block = block;
 		} // Builder
 		
-		public Result evalStmt(Env env) throws Exception{
+		public Result evalStmt(Env env){
 			Result res = new Result(env);
 			
 			while(true){
-				if( ((StrV)((cond.evalExpr(env)).getValue())).getValue() == "true"){
+				if( ((StrV)((cond.evalExpr(env)).getValue())).getValue() == "true"){					
 					res = block.evalStmt(env);
 				}
 				else
@@ -21,6 +21,10 @@ public class WhileStmt extends Stmt
 			}
 			
 			return res;
+		}
+		
+		public Stmt getStmt(){
+			return block;
 		}
 		
 		private CondExpr cond;
